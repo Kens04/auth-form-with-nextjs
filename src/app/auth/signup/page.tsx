@@ -3,6 +3,7 @@
 import Button from "@/app/features/auth/components/Button";
 import InputFiled from "@/app/features/auth/components/InputFiled";
 import { useSignupForm } from "@/app/features/auth/hooks/useSignupForm";
+import Link from "next/link";
 import React from "react";
 
 const Signup = () => {
@@ -52,6 +53,12 @@ const Signup = () => {
           </Button>
         </div>
       </form>
+      <Link
+        href={"/auth/login"}
+        className="mt-4 block text-center text-blue-400"
+      >
+        既に登録済みの方はこちら
+      </Link>
     </div>
   );
 };
