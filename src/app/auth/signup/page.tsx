@@ -55,7 +55,7 @@ const Signup = () => {
         </div>
       </form>
       <Link
-        href={"/auth/login"}
+        href={"/auth/email-confirm"}
         className="mt-4 block text-center text-blue-400"
       >
         既に登録済みの方はこちら
