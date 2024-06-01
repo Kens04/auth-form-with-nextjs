@@ -4,8 +4,11 @@ import { signupFormSchema } from "../lib/formSchema";
 import { z } from "zod";
 import { supabase } from "../lib/supabaseClient";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export const useSignupForm = () => {
+  const [error, setError] = useState<string>("");
+
   const router = useRouter();
   const form = useForm<z.infer<typeof signupFormSchema>>({
     resolver: zodResolver(signupFormSchema),
@@ -39,6 +42,7 @@ export const useSignupForm = () => {
 
       if (userError) {
         console.log(userError.message);
+        setError(userError.message);
         throw userError;
       }
 
@@ -50,5 +54,5 @@ export const useSignupForm = () => {
     }
   };
 
-  return { form, onSubmit };
+  return { form, onSubmit, error };
 };
