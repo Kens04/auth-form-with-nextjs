@@ -18,17 +18,25 @@ export const useLoginForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<z.infer<typeof loginFormSchema>> = async (data) => {
+  const onSubmit: SubmitHandler<z.infer<typeof loginFormSchema>> = async (
+    data
+  ) => {
     const { email, password } = data;
     try {
-      const { data, error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const { data, error: signInError } =
+        await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
 
       if (signInError) {
-        // console.log(signUpError);
-        setError(signInError.message);
+        console.log(signInError);
+        if (signInError.message.includes("Email not confirmed")) {
+          setError("メールアドレスを確認してください。");
+        }
+        if (signInError.message.includes("Invalid login credentials")) {
+          setError("そのようなユーザーは存在しません。");
+        }
         return;
       }
 
@@ -40,5 +48,5 @@ export const useLoginForm = () => {
     }
   };
 
-  return { form, onSubmit };
+  return { form, onSubmit, error };
 };
