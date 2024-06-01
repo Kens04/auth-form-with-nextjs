@@ -1,6 +1,15 @@
+"use client";
+
 import Link from "next/link";
+import { supabase } from "./features/auth/lib/supabaseClient";
+import Button from "./features/auth/components/Button";
 
 export default function Home() {
+  const handleBlogPost = async () => {
+    const { data } = await supabase.auth.getSession();
+    console.log(data);
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
       <h2 className="font-medium mb-5 text-3xl">Hello RHF & Zod</h2>
@@ -18,6 +27,13 @@ export default function Home() {
           ログイン
         </Link>
       </div>
+      <Button
+        colorClass="bg-green-500 mt-4"
+        onClick={handleBlogPost}
+        type="button"
+      >
+        ブログ投稿
+      </Button>
     </main>
   );
 }
